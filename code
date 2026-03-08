@@ -1,0 +1,134 @@
+import random
+
+# Data storage for bank accounts
+
+accounts = {}
+
+# Function to generate account number
+
+def generate_account_number():
+    return random.randint(10000000, 99999999)
+
+# Create a new bank account
+
+def create_account():
+    print("--- Create New Account ---")
+    
+    name = input("Enter account holder name: ")
+    age = int(input("Enter age: "))
+    phone = input("Enter phone number: ")
+    address = input("Enter address: ")
+    initial_deposit = float(input("Enter initial deposit amount: ₹"))
+    
+    account_number = generate_account_number()
+    
+    accounts[account_number] = {
+        "name": name,
+        "age": age,
+        "phone": phone,
+        "address": address,
+        "balance": initial_deposit
+    }
+    
+    print("\n Account created successfully!")
+    print(f"Your Account Number is: {account_number}")
+
+
+# Deposit money
+
+def deposit_money():
+    print("\n--- Deposit Money ---")
+    
+    acc_no = int(input("Enter account number: "))
+    
+    if acc_no in accounts:
+        amount = float(input("Enter amount to deposit: ₹"))
+        accounts[acc_no]["balance"] += amount
+        print(f" ₹{amount} deposited successfully.")
+        print(f"Updated Balance: ₹{accounts[acc_no]['balance']}")
+    else:
+        print(" Account not found.")
+
+
+# Withdraw money
+
+def withdraw_money():
+    print("\n--- Withdraw Money ---")
+    
+    acc_no = int(input("Enter account number: "))
+    
+    if acc_no in accounts:
+        amount = float(input("Enter amount to withdraw: ₹"))
+        
+        if amount <= accounts[acc_no]["balance"]:
+            accounts[acc_no]["balance"] -= amount
+            print(f" ₹{amount} withdrawn successfully.")
+            print(f"Remaining Balance: ₹{accounts[acc_no]['balance']}")
+        else:
+            print(" Insufficient balance.")
+    else:
+        print(" Account not found.")
+
+
+# Check account balance
+
+def check_balance():
+    print("\n--- Check Balance ---")
+    
+    acc_no = int(input("Enter account number: "))
+    
+    if acc_no in accounts:
+        print(f" Available Balance: ₹{accounts[acc_no]['balance']}")
+    else:
+        print(" Account not found.")
+
+# View account details
+
+def view_account_details():
+    print("\n--- Account Details ---")
+    
+    acc_no = int(input("Enter account number: "))
+    
+    if acc_no in accounts:
+        acc = accounts[acc_no]
+        print(f"\nAccount Number : {acc_no}")
+        print(f"Name           : {acc['name']}")
+        print(f"Age            : {acc['age']}")
+        print(f"Phone          : {acc['phone']}")
+        print(f"Address        : {acc['address']}")
+        print(f"Balance        : ₹{acc['balance']}")
+    else:
+        print(" Account not found.")
+
+# Main menu
+def main_menu():
+    while True:
+        print("\n==============================")
+        print("      BANK MANAGEMENT SYSTEM")
+        print("==============================")
+        print("1. Create Account")
+        print("2. Deposit Money")
+        print("3. Withdraw Money")
+        print("4. Check Balance")
+        print("5. View Account Details")
+        print("6. Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            create_account()
+        elif choice == '2':
+            deposit_money()
+        elif choice == '3':
+            withdraw_money()
+        elif choice == '4':
+            check_balance()
+        elif choice == '5':
+            view_account_details()
+        elif choice == '6':
+            print("\nThank you for banking with us!")
+            break
+        else:
+            print(" Invalid choice. Try again.")
+
+main_menu()
